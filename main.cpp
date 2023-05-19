@@ -101,7 +101,7 @@ public:
 
     Matrix<T> operator!() const {
         if (rows != cols) {
-            throw std::runtime_error("Matrix is not square. Inverse does not exist.");
+            throw std::logic_error("Matrix is not square. Inverse does not exist.");
         }
         Matrix<T> result(rows, cols);
         // код для вычисления обратной матрицы
@@ -132,3 +132,43 @@ public:
         }
     }
 };
+
+int main() {
+    try {
+        // Создание матрицы и запись её в файл
+        Matrix<int> matrix(3, 3);
+        matrix.writeToFile("matrix.txt");
+
+        // Чтение матрицы из файла
+        Matrix<int> newMatrix(0, 0);
+        newMatrix.readFromFile("matrix.txt");
+
+        // Сложение матриц
+        Matrix<int> sum = matrix + newMatrix;
+
+        // Вычитание матриц
+        Matrix<int> diff = matrix - newMatrix;
+
+        // Умножение матриц
+        Matrix<int> product = matrix * newMatrix;
+
+        // Умножение матрицы на скаляр
+        Matrix<int> scaledMatrix = matrix * 2;
+
+        // Создание нулевой матрицы
+        Matrix<int> zerosMatrix = Matrix<int>::zeros(2, 2);
+
+        // Создание единичной матрицы
+        Matrix<int> onesMatrix = Matrix<int>::ones(2, 2);
+
+        // Проверка на равенство матриц
+        bool isEqual = matrix == newMatrix;
+
+        // Проверка на неравенство матриц
+        bool isNotEqual = matrix != newMatrix;
+    } catch (const std::exception& e) {
+        std::cout << "Exception occurred: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
